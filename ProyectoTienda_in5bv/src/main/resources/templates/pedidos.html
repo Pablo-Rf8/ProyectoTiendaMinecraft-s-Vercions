@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>MINECRAFT - PEDIDOS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <script th:src="@{/js/main.js}" defer></script>
+</head>
+<body>
+<div class="titulo-contenedor">
+    <h2>Historial de Servidor</h2>
+    <span class="splash-text"></span>
+</div>
+
+<a th:href="@{/pedidos/nuevo}" class="boton-retro" style="max-width: 800px; width: 95%;">+ REGISTRAR NUEVO TICKET</a>
+
+<div class="contenedor-tabla">
+    <table>
+        <thead>
+        <tr>
+            <th>Nº TICKET</th>
+            <th>JUGADOR</th>
+            <th>FECHA</th>
+            <th>TOTAL (Emeralds)</th>
+            <th>ACCIÓN</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="p : ${listaPedidos}">
+            <td th:text="${p.idPedido}"></td>
+            <td th:text="${p.usuario.nombreUsu + ' ' + p.usuario.apellidoUsu}"></td>
+            <td th:text="${#temporals.format(p.fechaPedido, 'dd/MM/yyyy HH:mm')}"></td>
+            <td th:text="${p.totalPedido}"></td>
+            <td>
+                <a th:href="@{/pedidos/{id}/detalles(id=${p.idPedido})}" style="color:#55FFFF; background:none; border:none; padding:0; margin:0;">[VER]</a>
+                <span style="color: #555555;"> | </span>
+
+                <a th:href="@{/pedidos/editar/{id}(id=${p.idPedido})}" style="color:#FFFF55; background:none; border:none; padding:0; margin:0;">[EDIT]</a>
+                <span style="color: #555555;"> | </span>
+
+                <a th:href="@{/pedidos/eliminar/{id}(id=${p.idPedido})}" style="color:#FF5555; background:none; border:none; padding:0; margin:0;">[DELETE]</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<a th:href="@{/home}">[ VOLVER AL MENÚ ]</a>
+</body>
+</html>

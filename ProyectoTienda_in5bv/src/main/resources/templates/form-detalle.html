@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>MINECRAFT - AGREGAR ÍTEM</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <script th:src="@{/js/main.js}" defer></script>
+</head>
+<body>
+<div class="titulo-contenedor">
+    <h2 th:text="${titulo}" style="font-size: 16px;"></h2>
+    <span class="splash-text"></span>
+</div>
+
+<form th:action="@{/detalles/guardar}" th:object="${detalle}" method="post">
+    <input type="hidden" th:field="*{idDetalle}" />
+    <input type="hidden" th:field="*{pedido.idPedido}" />
+
+    <label>ÍTEM A COMPRAR:</label>
+    <select th:field="*{producto}" style="width: 100%; padding: 15px; background: rgba(0,0,0,0.9); color: #fff; margin-bottom: 25px; border: 2px solid #888; font-family: 'Press Start 2P', monospace; font-size: 10px; box-shadow: inset 0 0 10px rgba(0,0,0,1); outline: none;">
+        <option th:each="prod : ${productos}" th:value="${prod.idProducto}" th:text="${prod.nombreProducto + ' (Stock: ' + prod.stock + ')'}"></option>
+    </select>
+
+    <label>CANTIDAD:</label>
+    <input type="number" th:field="*{cantidad}" required />
+
+    <label>PRECIO UNITARIO (Emeralds):</label>
+    <input type="number" step="0.01" th:field="*{precioUnitario}" required />
+
+    <button type="submit" style="margin-bottom: 0;">GUARDAR EN EL COFRE</button>
+</form>
+
+<a th:href="@{/pedidos/{id}/detalles(id=${detalle.pedido.idPedido})}">[ CANCELAR ]</a>
+</body>
+</html>

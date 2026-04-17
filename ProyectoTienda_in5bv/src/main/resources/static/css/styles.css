@@ -1,0 +1,106 @@
+/* =========================================
+   VARIABLES Y CONFIGURACIÓN BASE
+   ========================================= */
+:root {
+    --mc-ui-bg: rgba(198, 198, 198, 0.85);
+    --mc-ui-border-light: rgba(255, 255, 255, 0.5);
+    --mc-ui-border-dark: rgba(85, 85, 85, 0.5);
+    --mc-btn-hover: rgba(122, 138, 255, 0.9);
+    --mc-text-yellow: #FFFF55;
+    --mc-text-green: #55FF55;
+}
+
+html { overflow-x: hidden; }
+
+body {
+    background-image: url('/fondo-minecraft-login.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-color: #3b3b3b;
+    color: #E0E0E0;
+    text-shadow: 2px 2px 0px #3F3F3F;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 12px;
+    margin: 0;
+
+    /* DESPLAZADO A LA DERECHA PARA LIBERAR A STEVE */
+    padding: 40px 20px 40px 180px;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: crosshair;
+}
+
+/* =========================================
+   PANTALLA DE CARGA (BUILDING TERRAIN)
+   ========================================= */
+#pantalla-carga {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+
+    background-color: #3b2716;
+    background-image: url('/fondo-tierra.jpg');
+    image-rendering: pixelated;
+
+    z-index: 99999;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#pantalla-carga .carga-texto { color: #FFFFFF; font-size: 16px; margin-bottom: 25px; text-shadow: 2px 2px 0px #222222; }
+#pantalla-carga .carga-subtexto { color: #DDDDDD; font-size: 12px; margin-bottom: 10px; text-shadow: 2px 2px 0px #222222; }
+
+#pantalla-carga .barra-contenedor {
+    width: 300px; height: 6px;
+    background-color: #000000;
+    border: 2px solid #555555; border-top-color: #333333; border-left-color: #333333;
+    position: relative;
+}
+
+#pantalla-carga #barra-progreso {
+    width: 0%; height: 100%;
+    background-color: #55FF55;
+    transition: width 0.1s linear;
+}
+
+/* =========================================
+   ANIMACIONES MAGISTRALES
+   ========================================= */
+@keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0px); } }
+@keyframes pulse-splash { 0% { transform: scale(1) rotate(-15deg); } 50% { transform: scale(1.1) rotate(-15deg); } 100% { transform: scale(1) rotate(-15deg); } }
+@keyframes fadeInScale { 0% { opacity: 0; transform: scale(0.9) translateY(20px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
+
+/* =========================================
+   TÍTULOS Y COMPONENTES
+   ========================================= */
+.titulo-contenedor { position: relative; animation: float 4s ease-in-out infinite; margin-bottom: 50px; margin-top: 30px; text-align: center; width: auto; }
+h2 { color: var(--mc-text-green); text-shadow: 4px 4px 0px #005500; text-transform: uppercase; font-size: 24px; margin: 0; display: inline-block; }
+.splash-text { position: absolute; top: -25px; right: -25px; color: var(--mc-text-yellow); text-shadow: 2px 2px 0px #3F3F15; font-size: 10px; animation: pulse-splash 0.5s alternate infinite; white-space: nowrap; z-index: 10; }
+
+form, .contenedor-tabla {
+    background-color: var(--mc-ui-bg);
+    background-image: linear-gradient(45deg, rgba(180, 180, 180, 0.3) 25%, transparent 25%), linear-gradient(-45deg, rgba(180, 180, 180, 0.3) 25%, transparent 25%), linear-gradient(45deg, transparent 75%, rgba(180, 180, 180, 0.3) 75%), linear-gradient(-45deg, transparent 75%, rgba(180, 180, 180, 0.3) 75%);
+    background-size: 4px 4px; border: 3px solid #000000;
+    box-shadow: inset 4px 4px 0px var(--mc-ui-border-light), inset -4px -4px 0px var(--mc-ui-border-dark), 0 15px 30px rgba(0,0,0,0.8);
+    padding: 30px; width: 95%; max-width: 450px; color: #333333; text-shadow: none;
+    animation: fadeInScale 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+input[type="text"], input[type="password"], input[type="number"] { background-color: rgba(0,0,0,0.9); border: 2px solid #888888; color: #FFFFFF; padding: 15px; width: 100%; font-family: 'Press Start 2P', monospace; font-size: 12px; margin-bottom: 25px; outline: none; box-sizing: border-box; transition: all 0.2s; box-shadow: inset 0 0 10px rgba(0,0,0,1); }
+input:focus { border-color: #FFFFFF; box-shadow: 0 0 0 3px rgba(85, 255, 85, 0.5), inset 0 0 10px rgba(85, 255, 85, 0.2); transform: scale(1.02); }
+
+button, a.boton-retro { background-color: rgba(198, 198, 198, 0.9); border: 2px solid #000000; box-shadow: inset 3px 3px 0px var(--mc-ui-border-light), inset -3px -3px 0px var(--mc-ui-border-dark), 0 4px 0px #000; color: #444444; padding: 15px; font-family: 'Press Start 2P', monospace; font-size: 11px; cursor: pointer; text-decoration: none; display: inline-block; text-align: center; width: 100%; box-sizing: border-box; position: relative; top: 0; transition: background-color 0.1s, top 0.1s, box-shadow 0.1s; text-shadow: 1px 1px 0px #FFF; }
+button:hover, a.boton-retro:hover { background-color: var(--mc-btn-hover); box-shadow: inset 3px 3px 0px rgba(170, 187, 255, 0.8), inset -3px -3px 0px rgba(51, 68, 136, 0.8), 0 4px 0px #000; color: var(--mc-text-yellow); text-shadow: 2px 2px 0px #3F3F15; }
+button:active, a.boton-retro:active { top: 4px; box-shadow: inset 3px 3px 0px var(--mc-ui-border-dark), inset -3px -3px 0px var(--mc-ui-border-light), 0 0px 0px #000; }
+
+body > a { color: #55FFFF; text-decoration: none; text-shadow: 2px 2px 0px #000000; background-color: rgba(0, 0, 0, 0.75); padding: 10px 20px; border: 2px solid #444; margin-top: 20px; display: inline-block; }
+body > a:hover { color: var(--mc-text-yellow); background-color: rgba(0, 0, 0, 0.9); border-color: #666; }

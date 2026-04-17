@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>MINECRAFT - EDITOR DE TICKET</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <script th:src="@{/js/main.js}" defer></script>
+</head>
+<body>
+<div class="titulo-contenedor">
+    <h2 th:text="${titulo}"></h2>
+    <span class="splash-text"></span>
+</div>
+
+<form th:action="@{/pedidos/guardar}" th:object="${pedido}" method="post">
+    <input type="hidden" th:field="*{idPedido}" />
+
+    <input type="hidden" th:field="*{fechaPedido}" />
+
+    <label>JUGADOR (CLIENTE):</label>
+    <select th:field="*{usuario}" style="width: 100%; padding: 15px; background: rgba(0,0,0,0.9); color: #fff; margin-bottom: 25px; border: 2px solid #888; font-family: 'Press Start 2P', monospace; font-size: 10px; box-shadow: inset 0 0 10px rgba(0,0,0,1); outline: none;">
+        <option th:each="user : ${usuarios}" th:value="${user.idUsuario}" th:text="${user.nombreUsu + ' ' + user.apellidoUsu}"></option>
+    </select>
+
+    <label>TOTAL A COBRAR (Emeralds):</label>
+    <input type="number" step="0.01" th:field="*{totalPedido}" required />
+
+    <button type="submit" style="margin-bottom: 0;">IMPRIMIR TICKET</button>
+</form>
+
+<a th:href="@{/pedidos}">[ CANCELAR ]</a>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>MINECRAFT - JUGADORES</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <script th:src="@{/js/main.js}" defer></script>
+</head>
+<body>
+
+<div class="titulo-contenedor">
+    <h2>Base de Datos</h2>
+    <span class="splash-text"></span>
+</div>
+
+<a th:href="@{/usuarios/nuevo}" class="boton-retro" style="max-width: 800px; width: 95%;">+ AGREGAR JUGADOR</a>
+
+<div class="contenedor-tabla">
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>NOMBRE</th>
+            <th>APELLIDO</th>
+            <th>EDAD</th>
+            <th>ACCIONES</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="u : ${listaUsuarios}">
+            <td th:text="${u.idUsuario}"></td>
+            <td th:text="${u.nombreUsu}"></td>
+            <td th:text="${u.apellidoUsu}"></td>
+            <td th:text="${u.edadUsu}"></td>
+            <td>
+                <a th:href="@{/usuarios/editar/{id}(id=${u.idUsuario})}" style="color:#FFFF55; background:none; border:none; padding:0; margin:0;">[EDITAR]</a>
+                <span style="color: #555555;"> | </span>
+                <a th:href="@{/usuarios/eliminar/{id}(id=${u.idUsuario})}" style="color:#FF5555; background:none; border:none; padding:0; margin:0;">[DELETE]</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<a th:href="@{/home}">[ VOLVER AL MENÚ ]</a>
+
+</body>
+</html>

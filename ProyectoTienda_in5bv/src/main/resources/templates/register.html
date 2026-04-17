@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>MINECRAFT - REGISTER</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <script th:src="@{/js/main.js}" defer></script>
+</head>
+<body class="bg-login">
+
+<div class="titulo-contenedor">
+    <h2>Nuevo Registro</h2>
+    <span class="splash-text"></span>
+</div>
+
+<div th:if="${error}" th:text="${error}" style="color: #FF5555; margin-bottom: 15px;"></div>
+
+<form th:action="@{/register}" method="post">
+    <label>NOMBRE DE USUARIO:</label>
+    <input type="text" name="username" required autocomplete="off"/>
+
+    <label>CREAR CONTRASEÑA:</label>
+    <input type="password" name="password" required/>
+
+    <button type="submit">CREAR CUENTA</button>
+</form>
+
+<a th:href="@{/login}">[ VOLVER AL LOGIN ]</a>
+
+</body>
+</html>

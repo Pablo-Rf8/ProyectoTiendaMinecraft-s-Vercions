@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>MINECRAFT - EDITOR DE ÍTEMS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <script th:src="@{/js/main.js}" defer></script>
+</head>
+<body>
+<div class="titulo-contenedor">
+    <h2 th:text="${titulo}"></h2>
+    <span class="splash-text"></span>
+</div>
+
+<form th:action="@{/productos/guardar}" th:object="${producto}" method="post">
+    <input type="hidden" th:field="*{idProducto}" />
+
+    <label>NOMBRE DEL ÍTEM:</label>
+    <input type="text" th:field="*{nombreProducto}" required autocomplete="off"/>
+
+    <label>PRECIO (Emeralds):</label>
+    <input type="number" step="0.01" th:field="*{precioProducto}" required />
+
+    <label>STOCK EN COFRE:</label>
+    <input type="number" th:field="*{stock}" required />
+
+    <label>CATEGORÍA DE BLOQUE:</label>
+    <select th:field="*{categoria}" style="width: 100%; padding: 15px; background: rgba(0,0,0,0.9); color: #fff; margin-bottom: 25px; border: 2px solid #888; font-family: 'Press Start 2P', monospace; font-size: 10px; box-shadow: inset 0 0 10px rgba(0,0,0,1); outline: none;">
+        <option th:each="cat : ${categorias}" th:value="${cat.idCategoria}" th:text="${cat.nombreCategoria}"></option>
+    </select>
+
+    <button type="submit" style="margin-bottom: 0;">CRAFTEAR Y GUARDAR</button>
+</form>
+
+<a th:href="@{/productos}">[ CANCELAR ]</a>
+</body>
+</html>

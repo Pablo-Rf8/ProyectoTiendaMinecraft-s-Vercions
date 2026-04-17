@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>MINECRAFT - DETALLES DEL TICKET</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <script th:src="@{/js/main.js}" defer></script>
+</head>
+<body>
+<div class="titulo-contenedor">
+    <h2>Contenido del Cofre</h2>
+    <span class="splash-text"></span>
+</div>
+
+<div class="contenedor-tabla" style="margin-bottom: 20px; text-align: center;">
+    <h3 style="color: #FFFF55; font-size: 14px; margin-bottom: 15px;">Ticket Nº: <span th:text="${pedido.idPedido}"></span></h3>
+    <p style="color: #E0E0E0; font-size: 10px; margin-bottom: 10px;">JUGADOR: <span style="color: #55FF55;" th:text="${pedido.usuario.nombreUsu + ' ' + pedido.usuario.apellidoUsu}"></span></p>
+    <p style="color: #E0E0E0; font-size: 10px; margin-bottom: 10px;">FECHA: <span th:text="${#temporals.format(pedido.fechaPedido, 'dd/MM/yyyy HH:mm')}"></span></p>
+    <p style="color: #E0E0E0; font-size: 10px;">TOTAL: <span style="color: #55FFFF;" th:text="${pedido.totalPedido} + ' Emeralds'"></span></p>
+</div>
+
+<a th:href="@{/detalles/nuevo/{idPedido}(idPedido=${pedido.idPedido})}" class="boton-retro" style="max-width: 800px; width: 95%; margin-bottom: 20px;">+ AGREGAR ÍTEM AL TICKET</a>
+
+<div class="contenedor-tabla">
+    <table>
+        <thead>
+        <tr>
+            <th>CANTIDAD</th>
+            <th>ÍTEM COMPRADO</th>
+            <th>P. UNITARIO</th>
+            <th>SUBTOTAL</th>
+            <th>ACCIONES</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="d : ${listaDetalles}">
+            <td th:text="${d.cantidad} + 'x'"></td>
+            <td th:text="${d.producto.nombreProducto}"></td>
+            <td th:text="${d.precioUnitario} + ' E'"></td>
+            <td style="color: #FFFF55;" th:text="${d.cantidad * d.precioUnitario} + ' E'"></td>
+            <td>
+                <a th:href="@{/detalles/editar/{id}(id=${d.idDetalle})}" style="color:#FFFF55; background:none; border:none; padding:0; margin:0;">[EDIT]</a>
+                <span style="color: #555555;"> | </span>
+                <a th:href="@{/detalles/eliminar/{idDetalle}/{idPedido}(idDetalle=${d.idDetalle}, idPedido=${pedido.idPedido})}" style="color:#FF5555; background:none; border:none; padding:0; margin:0;">[DELETE]</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<a th:href="@{/pedidos}">[ VOLVER AL HISTORIAL ]</a>
+</body>
+</html>

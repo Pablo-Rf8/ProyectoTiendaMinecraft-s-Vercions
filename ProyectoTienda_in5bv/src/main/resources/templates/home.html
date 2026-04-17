@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>MINECRAFT - MENÚ PRINCIPAL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <script th:src="@{/js/main.js}" defer></script>
+</head>
+<body>
+
+<div class="titulo-contenedor">
+    <h2>Menú Principal</h2>
+    <span class="splash-text"></span>
+</div>
+
+<div class="contenedor-tabla" style="text-align: center;">
+    <p style="color: #55FF55; margin-bottom: 25px;">[ ESTADO: SERVIDOR EN LÍNEA ]</p>
+
+    <a th:href="@{/usuarios}" class="boton-retro">MÓDULO: JUGADORES (CRUD)</a>
+    <a th:href="@{/categorias}" class="boton-retro">MÓDULO: CATEGORÍAS (CRUD)</a>
+
+    <a th:href="@{/productos}" class="boton-retro">MÓDULO: PRODUCTOS (CRUD)</a>
+    <a th:href="@{/pedidos}" class="boton-retro">HISTORIAL DE PEDIDOS</a>
+
+    <hr style="border: 2px solid #555; margin: 20px 0;">
+
+    <form th:action="@{/logout}" method="post" style="box-shadow: none; border: none; padding: 0; background: none; margin: 0; width: 100%;">
+        <button type="submit" style="color: #FF5555; border-color: #FF5555 #550000 #550000 #FF5555; margin-bottom: 0;">
+            SALIR DEL JUEGO
+        </button>
+    </form>
+</div>
+
+</body>
+</html>

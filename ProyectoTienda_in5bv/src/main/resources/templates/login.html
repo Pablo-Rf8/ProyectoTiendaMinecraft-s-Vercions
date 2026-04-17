@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>MINECRAFT - LOGIN</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <script th:src="@{/js/main.js}" defer></script>
+</head>
+<body class="bg-login">
+
+<div id="pantalla-carga">
+    <div class="carga-texto">Loading level</div>
+    <div class="carga-subtexto">Building terrain</div>
+    <div class="barra-contenedor">
+        <div id="barra-progreso"></div>
+    </div>
+</div>
+
+<div class="titulo-contenedor">
+    <h2>Inicio de Sesión</h2>
+    <span class="splash-text"></span>
+</div>
+
+<div th:if="${param.error}" style="color: #FF5555; margin-bottom: 15px;">[ERROR]: CREDENCIALES INVÁLIDAS</div>
+<div th:if="${param.logout}" style="color: #55FFFF; margin-bottom: 15px;">[INFO]: TE HAS DESCONECTADO</div>
+<div th:if="${param.registered}" style="color: #55FF55; margin-bottom: 15px;">[INFO]: JUGADOR REGISTRADO</div>
+
+<form th:action="@{/login}" method="post">
+    <label>USUARIO:</label>
+    <input type="text" name="username" required autofocus autocomplete="off"/>
+
+    <label>CONTRASEÑA:</label>
+    <input type="password" name="password" required/>
+
+    <button type="submit">ENTRAR AL SERVIDOR</button>
+</form>
+
+<a th:href="@{/register}">[ REGISTRAR NUEVO JUGADOR ]</a>
+
+</body>
+</html>
