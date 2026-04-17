@@ -1,1 +1,176 @@
+drop database if exists tiendaDb_in5bv;
+create database tiendaDb_in5bv;
+use tiendaDb_in5bv;
 
+create table usuario(
+    idUsuario int auto_increment not null primary key,
+    nombreUsu varchar(60) not null,
+    apellidoUsu varchar(60) not null,
+    edadUsu int not null
+);
+
+create table categoria(
+    idCategoria int auto_increment not null primary key,
+    nombreCategoria varchar(60) not null,
+    descripcionCategoria varchar(150)
+);
+
+create table producto(
+    idProducto int auto_increment not null primary key,
+    nombreProducto varchar(80) not null,
+    precioProducto decimal(10,2) not null,
+    stock int not null,
+    idCategoria int not null, -- Estandarizado
+    constraint fk_producto_categoria
+        foreign key (idCategoria)
+        references categoria(idCategoria)
+);
+
+create table pedido(
+    idPedido int auto_increment not null primary key,
+    fechaPedido datetime not null, -- Cambiado a DATETIME
+    totalPedido decimal(10,2) not null,		
+    idUsuario int not null, -- Estandarizado
+    constraint fk_pedido_usuario
+        foreign key (idUsuario)
+        references usuario(idUsuario)
+);
+
+create table detalle_pedido(
+    idDetalle int auto_increment not null primary key,
+    cantidad int not null,
+    precioUnitario decimal(10,2) not null,
+    idPedido int not null, -- Estandarizado
+    idProducto int not null, -- Estandarizado
+    constraint fk_detalle_pedido
+        foreign key (idPedido)
+        references pedido(idPedido),
+    constraint fk_detalle_producto
+        foreign key (idProducto)
+        references producto(idProducto)
+);
+
+-- ==========================================
+-- 1. INSERTAR USUARIOS (La Verdadera Old School)
+-- ==========================================
+INSERT INTO usuario (nombreUsu, apellidoUsu, edadUsu) VALUES 
+('Samuel', 'Vegetta777', 34),
+('Guillermo', 'Willyrex', 30),
+('Ruben', 'ElRubiusOMG', 34),
+('Alejandro', 'aLexBY11', 30),
+('Frank', 'sTaXx', 31),
+('Miguel', 'Mangelrogel', 32),
+('Borja', 'Luzu', 38),
+('Alvaro', 'iTownGamePlay', 38),
+('German', 'JuegaGerman', 33),
+('Sara', 'Sarinha', 37),
+('Lluis', 'HDluh', 34),
+('Gonzalo', 'Gona89', 34),
+('Miguel', 'Macundra', 35),
+('Ricardo', 'ElRichMC', 28),
+('Oliver', 'Chincheto77', 43),
+('Antonio', 'Tonacho', 42),
+('Daniel', 'DSimphony', 33),
+('Roc', 'Outconsumer', 42),
+('Jesus', 'ZarcortGame', 32),
+('Pedro', 'KronnoZomber', 30);
+
+-- ==========================================
+-- 2. INSERTAR CATEGORÍAS (Inventario MC)
+-- ==========================================
+INSERT INTO categoria (nombreCategoria, descripcionCategoria) VALUES 
+('Bloques de Construccion', 'Bloques basicos para hacer casas y castillos'),
+('Herramientas', 'Picos, palas, hachas y azadas'),
+('Armas', 'Espadas, arcos, ballestas y tridentes'),
+('Armaduras', 'Proteccion para sobrevivir a los creepers'),
+('Comida', 'Alimentos para regenerar la barra de hambre'),
+('Pociones', 'Bebidas magicas con efectos positivos o negativos'),
+('Materiales Preciosos', 'Diamantes, esmeraldas, oro y netherite'),
+('Redstone', 'Componentes para circuitos y mecanismos'),
+('Transporte', 'Vagonetas, botes y monturas'),
+('Decoracion', 'Cristales, cuadros, macetas y alfombras'),
+('Cultivos', 'Semillas, zanahorias, papas y trigo'),
+('Libros Mágicos', 'Libros encantados para mejorar el equipo'),
+('Drops de Mobs', 'Huesos, polvora, hilo y ender pearls'),
+('Spawners', 'Generadores de criaturas para granjas'),
+('Tintes', 'Colores para teñir armaduras y lana'),
+('Discos de Musica', 'Discos clasicos de C418'),
+('Estandartes', 'Banderas para clanes y decoracion'),
+('Exploracion', 'Mapas, brujulas y relojes'),
+('Iluminacion', 'Antorchas, faroles y piedra brillante'),
+('Miscelanea', 'Objetos raros y bloques de comandos');
+
+-- ==========================================
+-- 3. INSERTAR PRODUCTOS (Ítems del juego)
+-- ==========================================
+INSERT INTO producto (nombreProducto, precioProducto, stock, idCategoria) VALUES 
+('Bloque de Tierra', 1.50, 6400, 1),
+('Pico de Diamante', 450.00, 15, 2),
+('Espada de Netherite', 1200.00, 5, 3),
+('Pechera de Hierro', 150.00, 30, 4),
+('Manzana Dorada Encantada', 5000.00, 2, 5),
+('Pocion de Curacion Instantanea II', 80.00, 50, 6),
+('Diamante Puro', 300.00, 120, 7),
+('Polvo de Redstone', 5.00, 999, 8),
+('Elytras', 8500.00, 1, 9),
+('Bloque de Cristal', 10.00, 256, 10),
+('Semillas de Sandia', 2.50, 100, 11),
+('Libro Encantado: Filo V', 1500.00, 3, 12),
+('Perla de Ender', 50.00, 32, 13),
+('Generador de Esqueletos', 10000.00, 1, 14),
+('Tinte Lapislazuli', 15.00, 64, 15),
+('Disco Cat (C418)', 2500.00, 4, 16),
+('Estandarte Creeper', 500.00, 10, 17),
+('Mapa del Tesoro', 800.00, 8, 18),
+('Linterna del Mar', 45.00, 128, 19),
+('Estrella del Nether', 15000.00, 1, 20);
+
+-- ==========================================
+-- 4. INSERTAR PEDIDOS (Compras en el Servidor)
+-- ==========================================
+INSERT INTO pedido (fechaPedido, totalPedido, idUsuario) VALUES 
+('2026-04-01 14:30:00', 450.00, 1),  -- Vegetta
+('2026-04-02 15:45:00', 1200.00, 2), -- Willyrex
+('2026-04-03 10:15:00', 5000.00, 3), -- Rubius
+('2026-04-04 09:20:00', 150.00, 4),  -- Alexby
+('2026-04-05 18:05:00', 10.00, 5),   -- sTaXx
+('2026-04-06 20:30:00', 8500.00, 6), -- Mangel
+('2026-04-07 11:11:00', 300.00, 7),  -- Luzu
+('2026-04-08 16:40:00', 50.00, 8),   -- Town
+('2026-04-09 13:25:00', 1500.00, 9), -- German
+('2026-04-10 22:10:00', 2500.00, 10),-- Sarinha
+('2026-04-11 12:00:00', 1.50, 11),   -- Luh
+('2026-04-12 14:55:00', 80.00, 12),  -- Gona
+('2026-04-13 17:30:00', 15.00, 13),  -- Macundra
+('2026-04-14 19:45:00', 5.00, 14),   -- ElRichMC
+('2026-04-15 08:20:00', 45.00, 15),  -- Chincheto
+('2026-04-16 10:30:00', 800.00, 16), -- Tonacho
+('2026-04-17 23:50:00', 15000.00, 17),-- DSimphony
+('2026-04-18 15:15:00', 2.50, 18),   -- Outconsumer
+('2026-04-19 16:00:00', 500.00, 19), -- Zarcort
+('2026-04-20 21:20:00', 10000.00, 20);-- Kronno
+
+-- ==========================================
+-- 5. INSERTAR DETALLES DE PEDIDO
+-- ==========================================
+INSERT INTO detalle_pedido (cantidad, precioUnitario, idPedido, idProducto) VALUES 
+(1, 450.00, 1, 2),    
+(1, 1200.00, 2, 3),   
+(1, 5000.00, 3, 5),   
+(1, 150.00, 4, 4),    
+(1, 10.00, 5, 10),    
+(1, 8500.00, 6, 9),   
+(1, 300.00, 7, 7),    
+(1, 50.00, 8, 13),    
+(1, 1500.00, 9, 12),  
+(1, 2500.00, 10, 16), 
+(1, 1.50, 11, 1),     
+(1, 80.00, 12, 6),    
+(1, 15.00, 13, 15),   
+(1, 5.00, 14, 8),     
+(1, 45.00, 15, 19),   
+(1, 800.00, 16, 18),  
+(1, 15000.00, 17, 20),
+(1, 2.50, 18, 11),    
+(1, 500.00, 19, 17),  
+(1, 10000.00, 20, 14);
